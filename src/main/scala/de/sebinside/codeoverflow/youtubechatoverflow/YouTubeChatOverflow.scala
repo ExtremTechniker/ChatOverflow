@@ -5,7 +5,9 @@ import de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.mockup.Moc
 import de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.youtube.YouTubeChat
 import de.sebinside.codeoverflow.youtubechatoverflow.project.ProjectRegistry
 import de.sebinside.codeoverflow.youtubechatoverflow.project.dummyproject.DummyProject
+import de.sebinside.codeoverflow.youtubechatoverflow.project.minecraftcontrol.MinecraftControl
 import de.sebinside.codeoverflow.youtubechatoverflow.project.olacolorcontroll.OlaRedVsBlue
+import de.sebinside.codeoverflow.youtubechatoverflow.project.pizza.WhatPizzaProject
 import de.sebinside.codeoverflow.youtubechatoverflow.util.ArgsParser.parse
 
 /**
@@ -50,7 +52,9 @@ object YouTubeChatOverflow {
 
   def initProjects(): Unit = ProjectRegistry.registerAll(Seq(
     DummyProject(),
-    OlaRedVsBlue()
+    OlaRedVsBlue(),
+    MinecraftControl(),
+    WhatPizzaProject()
   ))
 
 

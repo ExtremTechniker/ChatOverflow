@@ -24,8 +24,8 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % 
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.0.6"
 
 // Scala SSH
-libraryDependencies += "com.github.seratch.com.veact" % "scala-ssh_2.12" % "0.8.0-1"
+libraryDependencies += "com.github.seratch.com.veact" % "scala-ssh_2.11" % "0.8.0-1"
 
 // ScalaFX
-libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.92-R10"
+//libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.92-R10"
 
