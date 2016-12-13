@@ -16,6 +16,9 @@ class ChatEvaluation(messageProvider: YouTubeMessageProvider) {
   }
 
   def getWordHistogram(lastMilliseconds: Long, predicate: Seq[String] => Seq[String] = identity): List[(String, Int)] = {
+
+    // println("Filtered: " + getMessages(lastMilliseconds).size)
+
     getMessages(lastMilliseconds) //all messages of last n milliseconds
       .map(msg => msg.getSnippet.getDisplayMessage) //extract text from messages
       .flatMap(message => {

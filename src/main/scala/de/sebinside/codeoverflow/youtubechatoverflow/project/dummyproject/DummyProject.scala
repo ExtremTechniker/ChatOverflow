@@ -16,14 +16,14 @@ private[dummyproject] class DummyProject extends ChatProject {
 
     while (true) {
 
-      val messages: List[LiveChatMessage] = evaluation.getMessages(10000)
+      val messages: List[LiveChatMessage] = evaluation.getMessages(3000)
 
       for (message: LiveChatMessage <- messages) {
         println("%s%s: %s".
           format(chatSponsorSymbol(message.getAuthorDetails.getIsChatSponsor), message.getAuthorDetails.getDisplayName, message.getSnippet.getDisplayMessage))
       }
 
-      Thread.sleep(1000)
+      Thread.sleep(3000)
 
     }
 
