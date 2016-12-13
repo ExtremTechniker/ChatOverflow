@@ -7,16 +7,21 @@ import de.sebinside.codeoverflow.youtubechatoverflow.project.ChatProject
 /**
   * Created by seb on 13.12.2016.
   */
-private[displaystatistics] class StatisticsDisplayProject extends ChatProject {
+class StatisticsDisplayProject extends ChatProject {
 
-  //private val _window = new StatisticsDisplay()
+  private val _window = new StatisticsDisplay()
 
   override private[project] def getName: String = "StatisticsDisplayProject"
 
   override private[project] def getDescription: String = "Project displaying various statistics about chat messages"
 
   override private[project] def start(evaluation: ChatEvaluation) = {
-    //_window.openDisplay()
+    _window.openDisplay()
+    while (true) {
+      Thread.sleep(2000)
+      val list = evaluation.getWordHistogram(10000).take(5)
+      _window.updateHistogram(list)
+    }
 
   }
 }

@@ -26,11 +26,9 @@ import scalafx.Includes._
 /**
   * A ScalaFX Window with the ability to display colors.
   */
-private[displaystatistics] object StatisticsDisplay extends JFXApp {
+private[displaystatistics] class StatisticsDisplay extends JFXApp {
 
-  var histogram = ObservableBuffer[(String, Int)](
-    ("andre", 5), ("dennis", 10)
-  )
+  val histogram = ObservableBuffer[(String, Int)](("noch keine einträge", 0))
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Chat Statistics"
@@ -52,11 +50,6 @@ private[displaystatistics] object StatisticsDisplay extends JFXApp {
             prefWidth = 200
           }
         )
-      }, new Button {
-        onAction =  (event: ActionEvent) => {histogram = ObservableBuffer[(String, Int)](
-          ("andre", 10), ("dennis", 20), ("sebastian", 2)
-        )
-        println("button pressed")}
       }
       )
     }
@@ -67,6 +60,18 @@ private[displaystatistics] object StatisticsDisplay extends JFXApp {
     new Thread(new Runnable {
       override def run(): Unit = main(null)
     }).start()
+  }
+
+  private[displaystatistics] def updateHistogram(hist: List[(String, Int)]): Unit = {
+
+    if (hist != null) {Platform.runLater( new Runnable {
+      override def run() = {
+        histogram.clear()
+        for(pair <- hist) {
+          histogram += pair
+        }
+      }
+    })}
   }
 
 

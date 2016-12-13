@@ -29,6 +29,7 @@ class ChatEvaluation(_messageProvider: YouTubeMessageProvider) {
       .mapValues(_.size) //count number of occurences of every word
       .toList
       .sortBy(_._2)
+      .reverse
   }
 
   /**
