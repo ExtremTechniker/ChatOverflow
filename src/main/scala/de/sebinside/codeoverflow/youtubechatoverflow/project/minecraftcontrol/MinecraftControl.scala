@@ -1,7 +1,7 @@
 package de.sebinside.codeoverflow.youtubechatoverflow.project.minecraftcontrol
 
-import java.awt.{MouseInfo, Robot}
 import java.awt.event.KeyEvent
+import java.awt.{MouseInfo, Robot}
 
 import de.sebinside.codeoverflow.youtubechatoverflow.backend.evaluation.ChatEvaluation
 import de.sebinside.codeoverflow.youtubechatoverflow.project.ChatProject
@@ -12,7 +12,7 @@ import de.sebinside.codeoverflow.youtubechatoverflow.project.ChatProject
 private[minecraftcontrol] class MinecraftControl extends ChatProject {
 
   private val robot = new Robot()
-  private val intervall = 5000
+  private val intervall = 2000
   private val pixelMouse = 350
 
   override private[project] def getName: String = "MinecraftControl"
@@ -26,24 +26,24 @@ private[minecraftcontrol] class MinecraftControl extends ChatProject {
       val histogram = evaluation.getWordHistogram(intervall, _.distinct)
 
       var found = false
-      for (valuePair : (String, Int) <- histogram) {
+      for (valuePair: (String, Int) <- histogram) {
         if (!found) {
           found = true
           valuePair._1 match {
-            case "up" =>
-              println("Move up!")
-              pressKey(KeyEvent.VK_SPACE, intervall)
-            case "down" =>
-              println("Move down!")
-              pressKey(KeyEvent.VK_SHIFT, intervall)
+            //case "up" =>
+            //  println("Move up!" + valuePair._2)
+            //  pressKey(KeyEvent.VK_SPACE, intervall)
+            //case "down" =>
+            //  println("Move down!"  + valuePair._2)
+            ///  pressKey(KeyEvent.VK_SHIFT, intervall)
             case "left" =>
-              println("Turn left!")
+              println("Turn left!" + valuePair._2)
               moveMouse(-pixelMouse, intervall)
             case "right" =>
-              println("Turn right!")
+              println("Turn right!" + valuePair._2)
               moveMouse(pixelMouse, intervall)
             case "go" =>
-              println("Move forward!")
+              println("Move forward!" + valuePair._2)
               pressKey(KeyEvent.VK_W, intervall)
             case "back" =>
               println("Move back!")
@@ -75,8 +75,8 @@ private[minecraftcontrol] class MinecraftControl extends ChatProject {
     try {
       for (i <- 0 to time by 30) {
         val mousePoint = MouseInfo.getPointerInfo.getLocation
-        val x : Double = mousePoint.getX
-        val y : Integer = mousePoint.getY.toInt
+        val x: Double = mousePoint.getX
+        val y: Integer = mousePoint.getY.toInt
         robot.mouseMove((x + 30.0 * xOffset.toDouble / time.toDouble).toInt, y)
         Thread.sleep(30)
       }

@@ -28,6 +28,8 @@ class ChatEvaluation(messageProvider: YouTubeMessageProvider) {
       .groupBy(identity)
       .mapValues(array => array.size) //count number of occurences of every word
       .toList
+      .sortBy(_._2)
+      .reverse
   }
 
   /**

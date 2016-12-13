@@ -6,7 +6,6 @@ import de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.youtube.Yo
 import de.sebinside.codeoverflow.youtubechatoverflow.project.ProjectRegistry
 import de.sebinside.codeoverflow.youtubechatoverflow.project.dummyproject.DummyProject
 import de.sebinside.codeoverflow.youtubechatoverflow.project.minecraftcontrol.MinecraftControl
-import de.sebinside.codeoverflow.youtubechatoverflow.project.olacolorcontroll.OlaRedVsBlue
 import de.sebinside.codeoverflow.youtubechatoverflow.project.olacolorcontroll.{CommunityColor, OlaRedVsBlue}
 import de.sebinside.codeoverflow.youtubechatoverflow.project.pizza.WhatPizzaProject
 import de.sebinside.codeoverflow.youtubechatoverflow.util.ArgsParser.parse
@@ -55,7 +54,7 @@ object YouTubeChatOverflow {
     DummyProject(),
     OlaRedVsBlue(),
     MinecraftControl(),
-    WhatPizzaProject()
+    WhatPizzaProject(),
     CommunityColor()
   ))
 
