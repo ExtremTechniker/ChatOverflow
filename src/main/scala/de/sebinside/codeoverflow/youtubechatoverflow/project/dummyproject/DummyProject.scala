@@ -16,19 +16,16 @@ private[dummyproject] class DummyProject extends ChatProject {
 
     while (true) {
 
-      val messages: List[LiveChatMessage] = evaluation.getMessages(3000)
+      val messages: List[(String, Int)] = evaluation.getWordHistogram(10000)
 
-      for (message: LiveChatMessage <- messages) {
-        println("%s%s: %s".
-          format(chatSponsorSymbol(message.getAuthorDetails.getIsChatSponsor), message.getAuthorDetails.getDisplayName, message.getSnippet.getDisplayMessage))
+      for ((name, value) <- messages) {
+        println("%s: %s".
+          format(name, value))
       }
 
-      Thread.sleep(3000)
+      Thread.sleep(1000)
 
     }
-
-    def chatSponsorSymbol(verified: Boolean) : String = if (verified) "*" else new String()
-
   }
 }
 
