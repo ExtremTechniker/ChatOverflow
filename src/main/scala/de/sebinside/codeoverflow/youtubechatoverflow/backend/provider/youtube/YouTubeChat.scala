@@ -39,7 +39,22 @@ class YouTubeChat(broadCastID: String) extends YouTubeMessageProvider {
 
   override private[backend] def getMessages(lastMilliseconds: Long) = {
     val currentTime = Calendar.getInstance.getTimeInMillis
-    messages.filter(m => m.getSnippet.getPublishedAt.getValue > currentTime - lastMilliseconds).toList
+
+    // println("Full size:" + messages.size)
+
+    var lastTime = currentTime
+
+    if (messages.nonEmpty) {
+
+      // println("NEUSTE: " + messages.toList.last.getSnippet.getPublishedAt)
+      // println("AKTUELLE ZEIT: " + Calendar.getInstance().getTime)
+      // println("DELTA: " + (messages.toList.last.getSnippet.getPublishedAt.getValue - currentTime))
+
+      lastTime = messages.toList.last.getSnippet.getPublishedAt.getValue
+    }
+
+
+    messages.filter(m => m.getSnippet.getPublishedAt.getValue > lastTime - lastMilliseconds).toList
   }
 }
 
