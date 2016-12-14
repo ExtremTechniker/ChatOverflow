@@ -56,8 +56,7 @@ object YouTubeChatOverflow {
     OlaRedVsBlue(),
     MinecraftControl(),
     WhatPizzaProject(),
-    CommunityColor()
-    WhatPizzaProject(),
+    CommunityColor(),
     StatisticsDisplayProject()
   ))
 
