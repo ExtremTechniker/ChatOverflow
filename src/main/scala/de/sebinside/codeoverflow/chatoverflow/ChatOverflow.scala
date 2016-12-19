@@ -2,7 +2,7 @@ package de.sebinside.codeoverflow.chatoverflow
 
 import de.sebinside.codeoverflow.chatoverflow.backend.evaluation.ChatEvaluation
 import de.sebinside.codeoverflow.chatoverflow.backend.provider.mockup.MockUpChat
-import de.sebinside.codeoverflow.chatoverflow.backend.provider.youtube.YouTubeChat
+import de.sebinside.codeoverflow.chatoverflow.backend.provider.twitch.TwitchChat
 import de.sebinside.codeoverflow.chatoverflow.project.ProjectRegistry
 import de.sebinside.codeoverflow.chatoverflow.project.displaystatistics.StatisticsDisplayProject
 import de.sebinside.codeoverflow.chatoverflow.project.dummyproject.DummyProject
@@ -36,7 +36,7 @@ object ChatOverflow {
 
         val youTubeChat =
           if (config.broadcastId.contains(".txt")) ChatEvaluation(MockUpChat("src/main/resources/" + config.broadcastId))
-          else ChatEvaluation(YouTubeChat(config.broadcastId))
+          else ChatEvaluation(TwitchChat(config.broadcastId))
 
         ProjectRegistry.start(config.projectName, youTubeChat)
 

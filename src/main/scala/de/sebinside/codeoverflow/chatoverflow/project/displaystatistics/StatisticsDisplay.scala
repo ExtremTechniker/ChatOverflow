@@ -1,5 +1,15 @@
 package de.sebinside.codeoverflow.chatoverflow.project.displaystatistics
 
+import scalafx.application.{JFXApp, Platform}
+import scalafx.beans.property.StringProperty
+import scalafx.collections.ObservableBuffer
+import scalafx.geometry.Insets
+import scalafx.scene.Scene
+import scalafx.scene.control.TableColumn._
+import scalafx.scene.control.{TableColumn, TableView}
+import scalafx.scene.paint.Color._
+
+
 /**
   * Created by dennis on 13.12.2016.
   */
@@ -46,14 +56,16 @@ private[displaystatistics] class StatisticsDisplay extends JFXApp {
 
   private[displaystatistics] def updateHistogram(hist: List[(String, Int)]): Unit = {
 
-    if (hist != null) {Platform.runLater( new Runnable {
-      override def run() = {
-        histogram.clear()
-        for(pair <- hist) {
-          histogram += pair
+    if (hist != null) {
+      Platform.runLater(new Runnable {
+        override def run(): Unit = {
+          histogram.clear()
+          for (pair <- hist) {
+            histogram += pair
+          }
         }
-      }
-    })}
+      })
+    }
   }
 
 

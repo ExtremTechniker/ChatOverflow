@@ -29,3 +29,9 @@ libraryDependencies += "com.github.seratch.com.veact" % "scala-ssh_2.11" % "0.8.
 // ScalaFX
 libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.92-R10"
 
+// PIRCBotX
+libraryDependencies += "org.pircbotx" % "pircbotx" % "2.1"
+
+// log4j
+libraryDependencies += "org.slf4j" % "slf4j-log4j12" % "1.7.22"
+

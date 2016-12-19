@@ -17,6 +17,8 @@ project/target
 # IntelliJ Idea
 .idea
 
-# YouTube Client Secrets
+# Secrets
 src/main/resources/client_secrets.json
 src/main/resources/ssh_login.xml
+src/main/resources/twitch_login.xml
+.DS_Store

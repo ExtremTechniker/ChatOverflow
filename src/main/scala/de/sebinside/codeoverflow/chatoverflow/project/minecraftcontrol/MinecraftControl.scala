@@ -67,7 +67,7 @@ private[minecraftcontrol] class MinecraftControl extends ChatProject {
       Thread.sleep(time)
       robot.keyRelease(key);
     } catch {
-      case _ => println("Exception")
+      case _: InterruptedException => println("Exception")
     }
   }
 
@@ -81,7 +81,7 @@ private[minecraftcontrol] class MinecraftControl extends ChatProject {
         Thread.sleep(30)
       }
     } catch {
-      case _ => println("Exception")
+      case _: InterruptedException => println("Exception")
     }
   }
 }
