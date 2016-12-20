@@ -9,6 +9,7 @@ import de.sebinside.codeoverflow.chatoverflow.project.dummyproject.DummyProject
 import de.sebinside.codeoverflow.chatoverflow.project.minecraftcontrol.MinecraftControl
 import de.sebinside.codeoverflow.chatoverflow.project.olacolorcontroll.{CommunityColor, OlaRedVsBlue}
 import de.sebinside.codeoverflow.chatoverflow.project.pizza.WhatPizzaProject
+import de.sebinside.codeoverflow.chatoverflow.project.spamfilter.SpamFilterProject
 import de.sebinside.codeoverflow.chatoverflow.util.ArgsParser.parse
 
 /**
@@ -57,7 +58,8 @@ object ChatOverflow {
     MinecraftControl(),
     WhatPizzaProject(),
     CommunityColor(),
-    StatisticsDisplayProject()
+    StatisticsDisplayProject(),
+    SpamFilterProject()
   ))
 
 
