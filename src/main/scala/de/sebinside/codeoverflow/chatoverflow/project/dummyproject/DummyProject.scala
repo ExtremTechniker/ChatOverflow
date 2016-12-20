@@ -16,7 +16,9 @@ private[dummyproject] class DummyProject extends ChatProject {
 
     while (true) {
 
-      val messages: List[ChatMessage] = evaluation.getMessages(10000)
+      val messages: List[ChatMessage] = evaluation.getMessages(1000)
+
+      println("Messages in the last second:")
 
       for (message <- messages) {
         println("%s: %s".
