@@ -21,8 +21,16 @@ private[dummyproject] class DummyProject extends ChatProject {
       println("Messages in the last second:")
 
       for (message <- messages) {
-        println("%s: %s".
-          format(message.userName, message.message))
+
+        val subChar: String = if (message.isPremium) "*" else ""
+
+        val colorString = message.color match {
+          case Some(color) => color
+          case None => ""
+        }
+
+        println("%s%s%s: %s".
+          format(subChar, message.userName, colorString, message.message))
       }
 
       Thread.sleep(1000)
