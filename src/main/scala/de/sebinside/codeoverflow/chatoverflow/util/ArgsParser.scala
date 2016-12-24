@@ -1,31 +1,49 @@
 package de.sebinside.codeoverflow.chatoverflow.util
 
+import de.sebinside.codeoverflow.chatoverflow.backend.provider.mockup.MockUpChat
+import de.sebinside.codeoverflow.chatoverflow.project.ProjectRegistry
+
 /**
-  * Created by seb on 29.11.2016.
+  * Provides utility methods to parse command line input using scopt.
   */
 object ArgsParser {
 
-  private val PROGRAM_NAME = "YouTube Chat Overflow"
-  private val PROGRAM_DESC = "Provides several methods for giving the youtube chat control."
+  private val PROGRAM_NAME = "Chat Overflow"
+  private val PROGRAM_DESC = "Provides several methods to read and analyze chat entries."
 
   private val argsParser = new scopt.OptionParser[Config](PROGRAM_NAME) {
     head(PROGRAM_DESC)
 
-    arg[String]("<broadcast id>").optional().action((value, config) =>
-      config.copy(broadcastId = value)).
-      // TODO: Add a validation method (also check for list flag)
-      validate(value => if (true) success else failure("Just for demonstration, add ID validation later")).
-      text("Specify the broadcast id of the (live) broadcast to work with.")
+    // Chat Provider
 
-    opt[String]('p', "project").valueName("<Project Name>").action((value, config) =>
-      config.copy(projectName = value)).
-      // TODO: Add a validation method
-      validate(value => if (true) success else failure("Just for demonstration. add project name validation")).
-      text("Specify a chat project to start. Get a list of available projects with --list.")
+    opt[String]('t', "twitch").action((value, config) => config.copy(twitchChannel = value)).
+      valueName("<irc channel name>").
+      text("The chat channel of a twitch broadcaster. Usually \"#broadcastername\".")
+
+    opt[String]('y', "youtube").action((value, config) => config.copy(youtubeLiveStreamId = value)).
+      valueName("<youtube livestream id>").
+      text("The youtube id of the livestream. Can be retrieved from the url.")
+
+    opt[String]('m', "mockup").action((value, config) => config.copy(mockUpChatInputFile = value)).
+      validate(fileName => if (MockUpChat.getMockUpFile(fileName).exists()) success else
+        failure("Unable to locate \"%s\".".format(MockUpChat.getMockUpFile(fileName).getAbsolutePath))).
+      valueName("<mockUp filename>").
+      text("The filename of a mockUp chat file. Should be located at \"%s\".".format(MockUpChat.MOCKUP_FOLDER))
+
+
+    // Chat Projects
+
+    opt[String]('p', "project").action((value, config) => config.copy(projectName = value)).
+      validate(value => if (ProjectRegistry.exists(value)) success else
+        failure("Unable to find a project named \"%s\".".format(value))).
+      valueName("<project name>").
+      text("The project name to work with the chat input. Get a list of available projects with --list.")
+
+    // TODO: Argument for key-value pairs
 
     opt[Unit]('l', "list").action((_, config) =>
       config.copy(listProjects = true)).
-      text("Get a list of all available chat projects. Exit after print.")
+      text("Get a list of all available chat projects. Exits after print.")
 
     help("help").hidden().text("prints help")
 
@@ -46,7 +64,9 @@ object ArgsParser {
 
   }
 
-  private case class Config(broadcastId: String = "",
+  private case class Config(twitchChannel: String = "",
+                            youtubeLiveStreamId: String = "",
+                            mockUpChatInputFile: String = "",
                             projectName: String = "",
                             listProjects: Boolean = false
                            )

@@ -29,7 +29,7 @@ import scala.xml.{NodeSeq, XML}
   */
 class TwitchChat(channelName: String) extends ListenerAdapter with MessageProvider {
 
-  private val XMLFilePath = "src/main/resources/twitch_login.xml"
+  private val XMLFilePath = "src/main/resources/credentials/private/twitch_login.xml"
 
   private val messages: ListBuffer[ChatMessage] = ListBuffer[ChatMessage]()
   private val bot = new PircBotX(getConfig)

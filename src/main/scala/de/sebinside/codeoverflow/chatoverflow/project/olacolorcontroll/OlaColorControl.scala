@@ -14,7 +14,7 @@ import scala.xml.{NodeSeq, XML}
 abstract private[olacolorcontroll] class OlaColorControl extends ChatProject {
 
   // TODO: Read from args if possible
-  val XMLFilePath = "src/main/resources/ssh_login.xml"
+  val XMLFilePath = "src/main/resources/credentials/private/ssh_login.xml"
 
   protected def setColor(client: SshClient, universe: Int, data: (Int, Int, Int, Int)): Unit = {
 
