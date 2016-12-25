@@ -28,7 +28,7 @@ abstract private[olacolorcontroll] class OlaColorControl extends ChatProject {
 
   protected def evaluate(evaluation: ChatEvaluation, client: SshClient): Unit
 
-  override private[project] def start(evaluation: ChatEvaluation) = {
+  override private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String]) = {
 
     // Get Login Data
     val sshXML = readSshXML(XMLFilePath)

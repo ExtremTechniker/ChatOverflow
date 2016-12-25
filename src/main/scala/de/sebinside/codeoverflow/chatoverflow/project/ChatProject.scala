@@ -11,5 +11,5 @@ private[project] trait ChatProject {
 
   private[project] def getDescription: String
 
-  private[project] def start(evaluation: ChatEvaluation): Unit
+  private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String])
 }

@@ -39,7 +39,9 @@ object ArgsParser {
       valueName("<project name>").
       text("The project name to work with the chat input. Get a list of available projects with --list.")
 
-    // TODO: Argument for key-value pairs
+    opt[Map[String, String]]('a', "args").action((value, config) => config.copy(arguments = value)).
+      valueName("k1=v1,k2=v2,...").
+      text("Optional arguments that will be passed to the chat project.")
 
     opt[Unit]('l', "list").action((_, config) =>
       config.copy(listProjects = true)).
@@ -68,7 +70,8 @@ object ArgsParser {
                             youtubeLiveStreamId: String = "",
                             mockUpChatInputFile: String = "",
                             projectName: String = "",
-                            listProjects: Boolean = false
+                            listProjects: Boolean = false,
+                            arguments: Map[String, String] = Map[String, String]()
                            )
 
 

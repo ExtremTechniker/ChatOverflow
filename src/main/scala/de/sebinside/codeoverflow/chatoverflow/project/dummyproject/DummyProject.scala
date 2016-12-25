@@ -12,7 +12,7 @@ private[dummyproject] class DummyProject extends ChatProject {
 
   override private[project] def getDescription: String = "Just a demo project"
 
-  override private[project] def start(evaluation: ChatEvaluation) = {
+  override private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String]) = {
 
     while (true) {
 

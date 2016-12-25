@@ -19,7 +19,7 @@ private[minecraftcontrol] class MinecraftControl extends ChatProject {
 
   override private[project] def getDescription: String = "Kontrolliere Minecraft"
 
-  override private[project] def start(evaluation: ChatEvaluation) = {
+  override private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String]) = {
 
     while (true) {
 

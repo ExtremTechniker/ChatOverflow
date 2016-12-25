@@ -15,12 +15,11 @@ class SpamFilterProject extends ChatProject {
   override private[project] def getDescription = "Removes frequently spammed messages from chat and displays " +
     "unfrequent (= interesting) messages in a separate window"
 
-
-  override private[project] def start(evaluation: ChatEvaluation): Unit = {
+  override private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String]) = {
     Thread.sleep(1000)
     while (true) {
       val messages = evaluation.getUncommonMessages(1000, 10000)
-      for (message <- messages.filter(message => message.split("\\s+").size >= messageMinLength)) {
+      for (message <- messages.filter(message => message.split("\\s+").length >= messageMinLength)) {
         println(message)
       }
       Thread.sleep(1000)

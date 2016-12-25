@@ -42,29 +42,33 @@ object ChatOverflow {
           logger.info("Uses mockup chat with file \"%s\".".format(config.mockUpChatInputFile))
           Some(MockUpChat(config.mockUpChatInputFile))
         } else {
-          logger.error("No chat information provided. Use --help to get further information.")
+          logger.fatal("No chat information provided. Use --help to get further information.")
           None
         }
 
       if (config.listProjects) {
 
         logger.info("Available Projects:\n%s".format(ProjectRegistry.listProjects.mkString(", ")))
+        System.exit(0)
 
       } else if (!ProjectRegistry.exists(config.projectName)) {
 
         // Did not find project
-        logger.error("Unable to find project with name \"%s\".".format(config.projectName))
+        logger.fatal("Unable to find project with name \"%s\".".format(config.projectName))
+        System.exit(1)
 
       } else if (provider.isEmpty) {
 
-        logger.error("No twitch irc channel, youtube livestream id or mockup chat file provided.")
+        logger.fatal("No twitch irc channel, youtube livestream id or mockup chat file provided.")
+        System.exit(1)
 
       } else {
 
         // Start doing cool stuff!
         logger.info("Starting chat project: \"%s\".".format(config.projectName))
+        logger.info("Provided arguments: %s".format(config.arguments.mkString(", ")))
 
-        ProjectRegistry.start(config.projectName, ChatEvaluation(provider.get))
+        ProjectRegistry.start(config.projectName, ChatEvaluation(provider.get), config.arguments)
       }
     }
   }

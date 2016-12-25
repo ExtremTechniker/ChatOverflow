@@ -14,7 +14,7 @@ class StatisticsDisplayProject extends ChatProject {
 
   override private[project] def getDescription: String = "Project displaying various statistics about chat messages"
 
-  override private[project] def start(evaluation: ChatEvaluation) = {
+  override private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String]) = {
     _window.openDisplay()
     while (true) {
       Thread.sleep(2000)

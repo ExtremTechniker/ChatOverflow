@@ -19,7 +19,8 @@ object ProjectRegistry {
 
   def exists(projectName: String): Boolean = projects.contains(projectName.toUpperCase)
 
-  def start(projectName: String, chatEvaluation: ChatEvaluation): Unit = projects(projectName.toUpperCase).start(chatEvaluation)
+  def start(projectName: String, chatEvaluation: ChatEvaluation, arguments: Map[String, String]): Unit =
+    projects(projectName.toUpperCase).start(chatEvaluation, arguments)
 
   def listProjects: Seq[String] = (for ((_, project) <- projects) yield project.getName).toSeq
 }
