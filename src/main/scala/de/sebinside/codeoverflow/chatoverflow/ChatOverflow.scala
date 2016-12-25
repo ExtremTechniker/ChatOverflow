@@ -3,6 +3,7 @@ package de.sebinside.codeoverflow.chatoverflow
 import de.sebinside.codeoverflow.chatoverflow.backend.evaluation.ChatEvaluation
 import de.sebinside.codeoverflow.chatoverflow.backend.provider.MessageProvider
 import de.sebinside.codeoverflow.chatoverflow.backend.provider.mockup.MockUpChat
+import de.sebinside.codeoverflow.chatoverflow.backend.provider.mockupv2.ChatMessageParser
 import de.sebinside.codeoverflow.chatoverflow.backend.provider.twitch.TwitchChat
 import de.sebinside.codeoverflow.chatoverflow.backend.provider.youtube.YouTubeChat
 import de.sebinside.codeoverflow.chatoverflow.project.ProjectRegistry
@@ -14,6 +15,8 @@ import de.sebinside.codeoverflow.chatoverflow.project.pizza.WhatPizzaProject
 import de.sebinside.codeoverflow.chatoverflow.project.spamfilter.SpamFilterProject
 import de.sebinside.codeoverflow.chatoverflow.util.ArgsParser.parse
 import org.apache.log4j.Logger
+
+import scala.io.Source
 
 /**
   * The Main Object of the ChatOverflow project. Parses the command line and starts a chat project.
@@ -29,6 +32,18 @@ object ChatOverflow {
 
     // Parse args and start doing cool stuff!
     parse(args) { config =>
+
+      // TODO: Remove debug content
+
+      logger.info("START!")
+      val parser = new ChatMessageParser()
+      println(parser.parseMockUpFile(Source.fromFile("%s/%s".format(MockUpChat.MOCKUP_FOLDER, config.mockUpChatInputFile)).getLines()))
+
+      logger.info("STOP!")
+
+      System.exit(0)
+
+      // TODO: Remove until here
 
       // Get provider from args
       val provider: Option[MessageProvider] =

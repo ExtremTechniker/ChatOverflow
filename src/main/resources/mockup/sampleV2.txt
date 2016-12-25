@@ -1,0 +1,10 @@
+seb: das ist zeile 1
+!1000
+seb: das ist noch eine zeile
+das ist eine zeile ohne autor
+!2000
+
+!3x
+seb : das hier auch
+*andre: ich bin hier
+seb: hi was geht?
