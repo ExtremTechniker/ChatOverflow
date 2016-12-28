@@ -12,13 +12,14 @@ import scala.io.Source
 /**
   * Created by renx on 05.12.16.
   */
+@Deprecated
 class MockUpChat(fileName: String) extends MessageProvider {
   private val messages: List[LiveChatMessage] =
     LiveChatMessageParser(Source.fromFile("%s/%s".format(MockUpChat.MOCKUP_FOLDER, fileName)).mkString)
 
   override private[backend] def getMessages: List[ChatMessage] = messages
 
-  override private[backend] def getMessages(lastMilliseconds: Long): List[ChatMessage] = {
+  override private[backend] def getLastMessages(lastMilliseconds: Long): List[ChatMessage] = {
     val currentTime = Calendar.getInstance.getTimeInMillis
     messages.filter(m => currentTime > m.getSnippet.getPublishedAt.getValue &&
       m.getSnippet.getPublishedAt.getValue > currentTime - lastMilliseconds)
@@ -26,6 +27,7 @@ class MockUpChat(fileName: String) extends MessageProvider {
 
 }
 
+@Deprecated
 object MockUpChat {
   val MOCKUP_FOLDER: String = "src/main/resources/mockup"
 

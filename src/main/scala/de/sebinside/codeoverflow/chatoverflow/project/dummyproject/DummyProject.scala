@@ -14,28 +14,42 @@ private[dummyproject] class DummyProject extends ChatProject {
 
   override private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String]) = {
 
-    while (true) {
-
-      val messages: List[ChatMessage] = evaluation.getMessages(1000)
-
-      println("Messages in the last second:")
-
-      for (message <- messages) {
-
-        val subChar: String = if (message.isPremium) "*" else ""
-
-        val colorString = message.color match {
-          case Some(color) => color
-          case None => ""
-        }
-
-        println("%s%s%s: %s".
-          format(subChar, message.userName, colorString, message.message))
+    if (arguments.contains("printAll") && arguments("printAll").toUpperCase == "TRUE") {
+      for (message <- evaluation.getMessages) {
+        printChatMessage(message)
       }
 
-      Thread.sleep(1000)
+    } else {
 
+      val delay = if (arguments.contains("delay")) arguments("delay").toInt else 1000
+
+      while (true) {
+
+        val messages: List[ChatMessage] = evaluation.getMessages(delay)
+
+        println(s"------------------ Messages in the last $delay milliseconds: ------------------")
+
+        for (message <- messages) {
+
+          printChatMessage(message)
+        }
+
+        Thread.sleep(delay)
+
+      }
     }
+  }
+
+  private def printChatMessage(message: ChatMessage): Unit = {
+    val subChar: String = if (message.isPremium) "*" else ""
+
+    val colorString = message.color match {
+      case Some(color) => color
+      case None => ""
+    }
+
+    println("%s%s%s: %s".
+      format(subChar, message.userName, colorString, message.message))
   }
 }
 

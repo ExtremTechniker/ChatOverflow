@@ -3,8 +3,6 @@ package de.sebinside.codeoverflow.chatoverflow.backend.evaluation
 import de.sebinside.codeoverflow.chatoverflow.ChatMessage
 import de.sebinside.codeoverflow.chatoverflow.backend.provider.MessageProvider
 
-import scala.collection.immutable.Stream.Empty
-
 /**
   * Created by seb on 29.11.2016.
   */
@@ -15,32 +13,6 @@ class ChatEvaluation(_messageProvider: MessageProvider) {
     */
   def getMessages: List[ChatMessage] = {
     _messageProvider.getMessages
-  }
-
-  def computeWordHistogram(messages: List[String], predicate: Seq[String] => Seq[String] = identity): List[(String, Int)] = {
-    messages
-      .flatMap(message => predicate(cleanMessage(message))) //split to single words
-      .groupBy(identity)
-      .mapValues(_.size) //count number of occurences of every word
-      .toList
-  }
-
-  private[ChatEvaluation] def cleanMessage(message: String): Seq[String] = {
-    message.split("\\s+").map(_.toLowerCase.replaceAll("[^a-zäöü]", ""))
-  }
-
-  def getWordHistogram(lastMilliseconds: Long, predicate: Seq[String] => Seq[String] = identity): List[(String, Int)] = {
-    // println("Filtered: " + getMessages(lastMilliseconds).size)
-    computeWordHistogram(getMessages(lastMilliseconds).map(_.message)) //extract text from messages
-      .sortBy(_._2)
-      .reverse
-  }
-
-  /**
-    * @return all messages sent during the last n milliseconds as provided by the YouTubeMessageProvider
-    */
-  def getMessages(lastMilliseconds: Long): List[ChatMessage] = {
-    _messageProvider.getMessages(lastMilliseconds)
   }
 
   def getUncommonMessages(lastMilliseconds: Long, comparationTime: Long): List[String] = {
@@ -62,6 +34,32 @@ class ChatEvaluation(_messageProvider: MessageProvider) {
     } else {
       List.empty
     }
+  }
+
+  private[ChatEvaluation] def cleanMessage(message: String): Seq[String] = {
+    message.split("\\s+").map(_.toLowerCase.replaceAll("[^a-zäöü]", ""))
+  }
+
+  def getWordHistogram(lastMilliseconds: Long, predicate: Seq[String] => Seq[String] = identity): List[(String, Int)] = {
+    // println("Filtered: " + getMessages(lastMilliseconds).size)
+    computeWordHistogram(getMessages(lastMilliseconds).map(_.message)) //extract text from messages
+      .sortBy(_._2)
+      .reverse
+  }
+
+  def computeWordHistogram(messages: List[String], predicate: Seq[String] => Seq[String] = identity): List[(String, Int)] = {
+    messages
+      .flatMap(message => predicate(cleanMessage(message))) //split to single words
+      .groupBy(identity)
+      .mapValues(_.size) //count number of occurences of every word
+      .toList
+  }
+
+  /**
+    * @return all messages sent during the last n milliseconds as provided by the YouTubeMessageProvider
+    */
+  def getMessages(lastMilliseconds: Long): List[ChatMessage] = {
+    _messageProvider.getLastMessages(lastMilliseconds)
   }
 }
 

@@ -17,6 +17,7 @@ class ChatMessage(val message: String,
                   val isPremium: Boolean = false,
                   val color: Option[String] = None) {
 
+  override def toString: String = s"ChatMessage($message, $userName, $timestamp, $isPremium, $color)"
 
 }
 

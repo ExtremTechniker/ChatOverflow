@@ -36,9 +36,9 @@ class YouTubeChat(broadCastID: String) extends MessageProvider {
 
   private[backend] def stopPullingMessages: Boolean = task.cancel
 
-  override private[backend] def getMessages = ???
+  override private[backend] def getMessages = messages.toList
 
-  override private[backend] def getMessages(lastMilliseconds: Long): List[ChatMessage] = {
+  override private[backend] def getLastMessages(lastMilliseconds: Long): List[ChatMessage] = {
     val currentTime = Calendar.getInstance.getTimeInMillis
 
     var lastTime = currentTime

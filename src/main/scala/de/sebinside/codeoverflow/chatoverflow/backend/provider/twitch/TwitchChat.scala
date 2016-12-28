@@ -111,7 +111,7 @@ class TwitchChat(channelName: String) extends ListenerAdapter with MessageProvid
     * @param lastMilliseconds The time span to receive messages
     * @return A list of ChatMessages
     */
-  override private[backend] def getMessages(lastMilliseconds: Long) = {
+  override private[backend] def getLastMessages(lastMilliseconds: Long) = {
     val currentTime = Calendar.getInstance.getTimeInMillis
 
     messages.filter(_.timestamp > currentTime - lastMilliseconds).toList
