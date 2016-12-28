@@ -23,4 +23,21 @@ object ProjectRegistry {
     projects(projectName.toUpperCase).start(chatEvaluation, arguments)
 
   def listProjects: Seq[String] = (for ((_, project) <- projects) yield project.getName).toSeq
+
+  def getName(projectName: String): String = projects(projectName.toUpperCase()).getName
+
+  def getDescription(projectName: String): String = projects(projectName.toUpperCase).getDescription
+
+  def prettyPrintAvailableArguments(projectName: String): String = {
+
+    val args = projects(projectName.toUpperCase()).getAvailableArgumentDescription
+
+    var returnString = ""
+
+    for (arg <- args) {
+      returnString += "\"%s\": %s\n".format(arg._1, arg._2)
+    }
+
+    returnString
+  }
 }

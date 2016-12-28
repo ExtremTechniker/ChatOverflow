@@ -12,6 +12,11 @@ private[dummyproject] class DummyProject extends ChatProject {
 
   override private[project] def getDescription: String = "Just a demo project"
 
+  override private[project] def getAvailableArgumentDescription =
+    Map[String, String](
+      "printAll" -> "True, if all messages should be printed at once.",
+      "delay" -> "The delay in milliseconds to wait in between message polling.")
+
   override private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String]) = {
 
     if (arguments.contains("printAll") && arguments("printAll").toUpperCase == "TRUE") {
@@ -27,7 +32,7 @@ private[dummyproject] class DummyProject extends ChatProject {
 
         val messages: List[ChatMessage] = evaluation.getMessages(delay)
 
-        println(s"------------------ Messages in the last $delay milliseconds: ------------------")
+        println(s"\n------------------ Messages in the last $delay milliseconds: ------------------")
 
         for (message <- messages) {
 

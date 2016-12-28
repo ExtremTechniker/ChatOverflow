@@ -43,6 +43,10 @@ object ArgsParser {
       valueName("k1=v1,k2=v2,...").
       text("Optional arguments that will be passed to the chat project.")
 
+    opt[Unit]('i', "info").action((_, config) =>
+      config.copy(information = true)).
+      text("Get more information about the specified project. Exits after print.")
+
     opt[Unit]('l', "list").action((_, config) =>
       config.copy(listProjects = true)).
       text("Get a list of all available chat projects. Exits after print.")
@@ -71,6 +75,7 @@ object ArgsParser {
                             mockUpChatInputFile: String = "",
                             projectName: String = "",
                             listProjects: Boolean = false,
+                            information: Boolean = false,
                             arguments: Map[String, String] = Map[String, String]()
                            )
 

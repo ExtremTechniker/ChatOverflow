@@ -48,7 +48,8 @@ object ChatOverflow {
 
       if (config.listProjects) {
 
-        logger.info("Available Projects:\n%s".format(ProjectRegistry.listProjects.mkString(", ")))
+        // Print out all available projects
+        println("Available Projects:\n%s".format(ProjectRegistry.listProjects.mkString(", ")))
         System.exit(0)
 
       } else if (!ProjectRegistry.exists(config.projectName)) {
@@ -56,6 +57,14 @@ object ChatOverflow {
         // Did not find project
         logger.fatal("Unable to find project with name \"%s\".".format(config.projectName))
         System.exit(1)
+
+      } else if (config.information) {
+
+        // Print out information about the specified project
+        println("Project Name: %s".format(ProjectRegistry.getName(config.projectName)))
+        println("Project Description: %s".format(ProjectRegistry.getDescription(config.projectName)))
+        println("Project Arguments:\n%s".format(ProjectRegistry.prettyPrintAvailableArguments(config.projectName)))
+        System.exit(0)
 
       } else if (provider.isEmpty) {
 
