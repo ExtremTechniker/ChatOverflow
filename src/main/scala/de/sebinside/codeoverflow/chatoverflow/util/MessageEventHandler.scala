@@ -6,8 +6,9 @@ import java.io.File
 import de.sebinside.codeoverflow.chatoverflow.backend.evaluation.ChatEvaluation
 import org.apache.log4j.Logger
 import scala.util.control.Breaks._
+import scala.collection.mutable.ListBuffer
 
-import scala.xml.{NodeSeq, XML}
+import scala.xml.XML
 
 /**
   * Created by renx on 20.12.16.
@@ -15,18 +16,18 @@ import scala.xml.{NodeSeq, XML}
 class MessageEventHandler(settingsXmlPath: String) {
 
   private var interval: Int = 0
-  private val messageEvents : List[MessageEvent] = List[MessageEvent]()
+  private val messageEvents = ListBuffer[MessageEvent]()
   parseSettingsXml()
 
   private def parseSettingsXml(): Unit = {
-    val settingsNode: NodeSeq = XML.loadFile(new File(settingsXmlPath))
+    val settingsNode = XML.loadFile(new File(settingsXmlPath))
 
     if (settingsNode.isEmpty)
       throw new Exception("Invalid XML Format of " + settingsXmlPath)
 
     interval = (settingsNode \ "@interval").text.toInt
 
-    for (eventNode <- settingsNode) {
+    for (eventNode <- settingsNode.child) {
       eventNode.label match {
         case "event" => {
           val message: String = (eventNode \ "@message").text
@@ -34,14 +35,15 @@ class MessageEventHandler(settingsXmlPath: String) {
           (eventNode \ "@type").text match {
             case "key" => {
               val modifierKeys: List[Int] = List[Int]()
-              for (keyNode <- eventNode) {
+              for (keyNode <- eventNode.child) {
                 keyNode match {
                   case <modifierKey>{keyValue}</modifierKey> => modifierKeys :+ keyValue
+                  case other => {}
                 }
               }
-              messageEvents :+ new KeyEvent(message, eventTime, (eventNode \ "@key").text.toInt, modifierKeys)
+              messageEvents += new KeyEvent(message, eventTime, (eventNode \ "key").text.toInt, modifierKeys)
             }
-            case "mouse" => messageEvents :+ new MouseEvent(message, eventTime, (eventNode \ "@xOffset").text.toInt, (eventNode \ "@yOffset").text.toInt)
+            case "mouse" => messageEvents += new MouseEvent(message, eventTime, (eventNode \ "xOffset").text.toInt, (eventNode \ "yOffset").text.toInt)
             case other => Logger.getLogger(this.getClass).warn(other + " is not a valid type for events")
           }
         }
@@ -50,19 +52,23 @@ class MessageEventHandler(settingsXmlPath: String) {
     }
   }
 
-  private[project] def startMessageEventHandler(evaluation: ChatEvaluation): Unit = {
+  def startMessageEventHandler(evaluation: ChatEvaluation): Unit = {
     while (true) {
       val histogram = evaluation.getWordHistogram(interval, _.distinct)
       var found = false
       breakable {
         for (valuePair: (String, Int) <- histogram) {
-          messageEvents.foreach(event => if (valuePair._1.matches(event.message)) {
-            new Thread(event).start()
-            found = true
+          messageEvents.foreach(event => {
+            if (valuePair._1.equals(event.message)) {
+              println("Doing MessageEvent for key '%s'".format(event.message))
+              new Thread(event).start()
+              found = true
+            }
           })
           if (found) break
         }
       }
+      if (!found) println("No Message found!")
       Thread.sleep(interval)
     }
   }
@@ -77,6 +83,8 @@ private[util] object MessageEvent {
 }
 
 private[util] class MouseEvent(message: String, timeInMillis: Int, xPositionOffset: Int, yPositionOffset: Int) extends MessageEvent(message, timeInMillis) {
+  println("Created MouseEvent for message '%s'".format(message))
+
   private val fps = 30
 
   override def run {
@@ -91,6 +99,8 @@ private[util] class MouseEvent(message: String, timeInMillis: Int, xPositionOffs
 }
 
 private[util] class KeyEvent(message: String, timeInMillis: Int, key: Int, modifierKeys: List[Int]) extends MessageEvent(message, timeInMillis) {
+  println("Created KeyEvent for message '%s'".format(message))
+
   override def run = {
     modifierKeys.foreach(modifierKey => MessageEvent.robot.keyPress(modifierKey))
     MessageEvent.robot.keyPress(key)

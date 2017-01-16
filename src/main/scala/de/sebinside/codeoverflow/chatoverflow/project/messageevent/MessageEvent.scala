@@ -19,7 +19,7 @@ private[messageevent] class MessageEvent extends ChatProject {
 
   override private[project] def getDescription: String = "Führt in XML-definierte Events aus"
 
-  override private[project] def start(evaluation: ChatEvaluation) = {
+  override private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String]) = {
     val handler : MessageEventHandler = new MessageEventHandler("")
     handler.startMessageEventHandler(evaluation)
   }
