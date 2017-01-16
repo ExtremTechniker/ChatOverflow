@@ -13,8 +13,7 @@ import scala.xml.{NodeSeq, XML}
   */
 abstract private[olacolorcontroll] class OlaColorControl extends ChatProject {
 
-  // TODO: Read from args if possible
-  val XMLFilePath = "src/main/resources/ssh_login.xml"
+  val XMLFilePath = "src/main/resources/credentials/private/ssh_login.xml"
 
   protected def setColor(client: SshClient, universe: Int, data: (Int, Int, Int, Int)): Unit = {
 
@@ -28,7 +27,7 @@ abstract private[olacolorcontroll] class OlaColorControl extends ChatProject {
 
   protected def evaluate(evaluation: ChatEvaluation, client: SshClient): Unit
 
-  override private[project] def start(evaluation: ChatEvaluation) = {
+  override private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String]) = {
 
     // Get Login Data
     val sshXML = readSshXML(XMLFilePath)

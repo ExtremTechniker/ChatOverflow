@@ -14,7 +14,7 @@ private[project] class WhatPizzaProject extends ChatProject {
 
   override private[project] def getDescription = "Chooses a tasty pizza, just for you!"
 
-  override private[project] def start(evaluation: ChatEvaluation) = {
+  override private[project] def start(evaluation: ChatEvaluation, arguments: Map[String, String]) = {
 
     while (true) {
 

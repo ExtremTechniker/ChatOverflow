@@ -1,4 +1,4 @@
-name := "YouTubeChatOverflow"
+name := "ChatOverflow"
 
 version := "1.0"
 

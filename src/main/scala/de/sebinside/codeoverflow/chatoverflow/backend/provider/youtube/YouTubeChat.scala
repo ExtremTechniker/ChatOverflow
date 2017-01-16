@@ -30,32 +30,24 @@ class YouTubeChat(broadCastID: String) extends MessageProvider {
   }
   private var messages = immutable.SortedSet[LiveChatMessage]()(orderMsgByTimeAndId)
 
-  // FIXME: Do this at antoher place... or maybe stop it finally. Optional
   startPullingMessages()
 
   private[backend] def startPullingMessages(interval: Long = 1000L, delay: Long = 0L): Unit = t.schedule(task, delay, interval)
 
   private[backend] def stopPullingMessages: Boolean = task.cancel
 
-  override private[backend] def getMessages = ???
+  override private[backend] def getMessages = messages.toList
 
-  override private[backend] def getMessages(lastMilliseconds: Long): List[ChatMessage] = {
+  override private[backend] def getLastMessages(lastMilliseconds: Long): List[ChatMessage] = {
     val currentTime = Calendar.getInstance.getTimeInMillis
-
-    // println("Full size:" + messages.size)
 
     var lastTime = currentTime
 
     if (messages.nonEmpty) {
-
-      // println("NEUSTE: " + messages.toList.last.getSnippet.getPublishedAt)
-      // println("AKTUELLE ZEIT: " + Calendar.getInstance().getTime)
-      // println("DELTA: " + (messages.toList.last.getSnippet.getPublishedAt.getValue - currentTime))
-
       lastTime = messages.toList.last.getSnippet.getPublishedAt.getValue
     }
 
-
+    // FIXME: Test this or find a better method
     messages.filter(m => m.getSnippet.getPublishedAt.getValue > lastTime - lastMilliseconds).toList
   }
 }

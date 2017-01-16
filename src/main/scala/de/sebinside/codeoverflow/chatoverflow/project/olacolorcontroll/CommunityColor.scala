@@ -10,7 +10,7 @@ import scala.collection.mutable.ListBuffer
   * Created by sebastian on 13.12.2016.
   */
 private[project] class CommunityColor extends OlaColorControl {
-  override protected def evaluate(evaluation: ChatEvaluation, client: SshClient) = {
+  override protected def evaluate(evaluation: ChatEvaluation, client: SshClient): Unit = {
 
     val INTERVAL = 5000
 

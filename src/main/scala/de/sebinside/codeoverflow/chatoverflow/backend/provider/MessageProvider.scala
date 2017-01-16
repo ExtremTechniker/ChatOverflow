@@ -9,6 +9,6 @@ trait MessageProvider {
 
   private[backend] def getMessages: List[ChatMessage]
 
-  private[backend] def getMessages(lastMilliseconds: Long): List[ChatMessage]
+  private[backend] def getLastMessages(lastMilliseconds: Long): List[ChatMessage]
 
 }

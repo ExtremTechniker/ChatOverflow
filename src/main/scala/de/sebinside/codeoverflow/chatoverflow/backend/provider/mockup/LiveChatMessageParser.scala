@@ -11,6 +11,7 @@ import scala.util.parsing.combinator.JavaTokenParsers
 /**
   * Created by renx on 12.12.16.
   */
+@Deprecated
 object LiveChatMessageParser extends JavaTokenParsers {
 
   override val skipWhitespace = false
